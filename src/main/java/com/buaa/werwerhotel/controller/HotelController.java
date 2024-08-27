@@ -413,7 +413,7 @@ public class HotelController {
                 put("title", "酒店订单取消成功");
                 put("messageTime", formattedDate);
                 put("content", Mcontent);
-                put("type", "4");
+                put("orderType", "4");
             }});
 
             emailService.sendSimpleMail(userClient.getEmail(userID), "酒店订单取消成功", content);

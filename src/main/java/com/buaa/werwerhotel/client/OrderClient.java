@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@FeignClient(name = "user-service",contextId = "orderClient")
+@FeignClient(name = "user-service",contextId = "orderClient", path = "/api/users")
 public interface OrderClient {
 
     @GetMapping("/orders/{uid}/status")
@@ -19,7 +19,7 @@ public interface OrderClient {
     List<OrderDTO> getOrderByUid(@PathVariable("uid") String uid,
                                  @RequestParam("type") String type);
 
-    @GetMapping("/orders/{oid}/{uid}")
+    @GetMapping("/orders/byOidAndUid/{oid}/{uid}")
     OrderDTO getOrderByOidAndUid(@PathVariable("oid") String oid,
                                  @PathVariable("uid") String uid);
 

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Comment {
     @JsonIgnore
-    private Integer hotel_id;
+    private String hotel_id;
     private String name;
     private String time;
     private String content;
@@ -63,11 +63,11 @@ public class Comment {
     }
 
 
-    public Integer getHotel_id() {
+    public String getHotel_id() {
         return hotel_id;
     }
 
-    public void setHotel_id(Integer hotel_id) {
+    public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
     }
 

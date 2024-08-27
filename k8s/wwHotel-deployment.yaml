@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wwHotel-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wwHotel
+  template:
+    metadata:
+      labels:
+        app: wwHotel
+    spec:
+      containers:
+      - name: wwHotel
+        image: qiuer0121/wwHotel:latest
+        ports:
+        - containerPort: 8080
+

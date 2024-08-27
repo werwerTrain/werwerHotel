@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wwHotel-service
+spec:
+  selector:
+    app: wwHotel
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+      nodePort: 30001
+  type: NodePort

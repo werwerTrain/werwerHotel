@@ -231,7 +231,7 @@ public class HotelController {
         return result;
     }
 
-    @GetMapping("getPlaces")
+    @GetMapping("/getPlaces")
     public Map<String, Object> getPlaces() {
         List<Object> places = new ArrayList<>();
         hotelService.getPlaces().forEach(e -> {

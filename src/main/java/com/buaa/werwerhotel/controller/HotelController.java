@@ -424,5 +424,10 @@ public class HotelController {
         }
 
     }
+
+    @GetMapping("/getOrderDetail")
+    public List<Map<String, Object>> getHotelOrderDetail(String oid){
+        return hotelService.getHotelOrderDetail(oid);
+    }
 }
 

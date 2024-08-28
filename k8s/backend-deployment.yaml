@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: werwerhotel-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: werwerhotel
+  template:
+    metadata:
+      labels:
+        app: werwerhotel
+    spec:
+      containers:
+      - name: werwerhotel
+        image: luluplum/werwerhotel:latest
+        ports:
+        - containerPort: 9091

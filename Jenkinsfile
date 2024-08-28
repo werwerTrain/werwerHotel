@@ -8,14 +8,14 @@ pipeline {
             }
         }
         
-        // stage('delete old image in k8s'){
-        //     steps{
-        //          bat '''
-        //         kubectl delete -f k8s/wwHotel-deployment.yaml
-        //         kubectl delete -f k8s/wwHotel-service.yaml
-        //         '''
-        //     }
-        // }
+        stage('delete old image in k8s'){
+            steps{
+                 bat '''
+                kubectl delete -f k8s/wwHotel-deployment.yaml || true
+                kubectl delete -f k8s/wwHotel-service.yaml || true
+                '''
+            }
+        }
         stage('Build new image') {
             steps {
                 script {
@@ -32,7 +32,7 @@ pipeline {
                         docker rm $container
                     }
                     '''
-                    bat 'docker rmi -f qiuer0121/wwhotel:latest'
+                    bat 'docker rmi -f qiuer0121/wwhotel:latest || true'
                     bat '''
                     docker build -t qiuer0121/wwhotel .
                     '''

@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       port: 9091
       targetPort: 9091
-      nodePort: 9095
+      nodePort: 9091
   type: NodePort

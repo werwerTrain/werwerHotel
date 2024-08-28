@@ -20,21 +20,21 @@ pipeline {
             steps {
                 script {
                     powershell '''
-                    $containers = docker ps -q --filter "ancestor=qiuer0121/wwhotel:latest"
+                    $containers = docker ps -q --filter "ancestor=3181577132/wwhotel:latest"
                     foreach ($container in $containers) {
                         Write-Output "Stopping container $container"
                         docker stop $container
                     }
     
-                    $allContainers = docker ps -a -q --filter "ancestor=qiuer0121/wwhotel:latest"
+                    $allContainers = docker ps -a -q --filter "ancestor=3181577132/wwhotel:latest"
                     foreach ($container in $allContainers) {
                         Write-Output "Removing container $container"
                         docker rm $container
                     }
                     '''
-                    bat 'docker rmi -f qiuer0121/wwhotel:latest || true'
+                    bat 'docker rmi -f 3181577132/wwhotel:latest || true'
                     bat '''
-                    docker build -t qiuer0121/wwhotel .
+                    docker build -t 3181577132/wwhotel .
                     '''
                 }
             }

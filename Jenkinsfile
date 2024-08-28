@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'sxq', url: 'https://github.com/werwerTrain/werwerHotel.git'
+                git branch: 'candy', url: 'https://github.com/werwerTrain/werwerHotel.git'
             }
         }
         

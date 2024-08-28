@@ -11,8 +11,8 @@ pipeline {
         // stage('delete old image in k8s'){
         //     steps{
         //          bat '''
-        //         kubectl delete -f k8s/wwhotel-deployment.yaml
-        //         kubectl delete -f k8s/wwhotel-service.yaml
+        //         kubectl delete -f k8s/wwHotel-deployment.yaml
+        //         kubectl delete -f k8s/wwHotel-service.yaml
         //         '''
         //     }
         // }
@@ -55,9 +55,9 @@ pipeline {
         stage('deploy to k8s'){
             steps{
                 bat '''
-                kubectl apply -f k8s/wwhotel-deployment.yaml
-                kubectl apply -f k8s/wwhotel-service.yaml
-                kubectl apply -f k8s/wwhotel-hpa.yaml
+                kubectl apply -f k8s/wwHotel-deployment.yaml
+                kubectl apply -f k8s/wwHotel-service.yaml
+                kubectl apply -f k8s/wwHotel-hpa.yaml
                 '''
                 echo '部署成功'
             }

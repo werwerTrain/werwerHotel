@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: wwHotel
-        image: qiuer0121/wwHotel:latest
+        image: qiuer0121/wwhotel:latest
         ports:
         - containerPort: 9091
 

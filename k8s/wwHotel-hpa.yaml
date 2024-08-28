@@ -1,12 +1,12 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: wwHotel-hpa
+  name: wwhotel-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: wwHotel-deployment
+    name: wwhotel-deployment
   minReplicas: 1
   maxReplicas: 5
   metrics:

@@ -44,8 +44,8 @@ pipeline {
             steps {
                 script {
                         bat '''
-                        echo 20050121Rabbit| docker login -u qiuer0121 --password-stdin
-                        docker push qiuer0121/wwhotel:latest
+                        echo 040723Lyl| docker login -u 3181577132 --password-stdin
+                        docker push 3181577132/wwhotel:latest
                         '''
                 }
             }

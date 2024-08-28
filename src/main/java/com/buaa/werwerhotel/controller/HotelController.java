@@ -179,8 +179,7 @@ public class HotelController {
         }
         Integer messages = hotelService.getCommentNum(id);
         current_hotel = hotelService.getHotelInfo(id);
-        if(current_hotel!=null)
-        {
+        if (current_hotel != null) {
             List<Object> commentInfo = new ArrayList<>();
             hotelService.searchComment(id).forEach(e -> {
                 commentInfo.add(new HashMap<>() {{
@@ -223,10 +222,8 @@ public class HotelController {
             result.put("comments", commentInfo);
             result.put("rooms", roomInfo);
             result.put("others", othersInfo);
-        }
-        else
-        {
-            result.put("name",null);
+        } else {
+            result.put("name", null);
         }
         return result;
     }
@@ -332,9 +329,8 @@ public class HotelController {
                                        @PathVariable String status) {
         List<OrderDTO> orders = switch (status) {
             case "paid" -> orderClient.getOrdersByUidAndStatus(userID, "Paid", "Hotel");
-            case "cancel" ->
-                    orderClient.getOrdersByUidAndStatus(userID, "Canceled", "Hotel");
-            case "done" -> orderClient.getOrdersByUidAndStatus(userID, "Done","Hotel");
+            case "cancel" -> orderClient.getOrdersByUidAndStatus(userID, "Canceled", "Hotel");
+            case "done" -> orderClient.getOrdersByUidAndStatus(userID, "Done", "Hotel");
             default -> orderClient.getOrderByUid(userID, "Hotel");
         };
 
@@ -426,7 +422,7 @@ public class HotelController {
     }
 
     @GetMapping("/getOrderDetail")
-    public List<Map<String, Object>> getHotelOrderDetail(String oid){
+    public List<Map<String, Object>> getHotelOrderDetail(String oid) {
         return hotelService.getHotelOrderDetail(oid);
     }
 }

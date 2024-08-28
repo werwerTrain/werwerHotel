@@ -1,5 +1,6 @@
 package com.buaa.werwerhotel.client;
 
+import com.buaa.werwerhotel.client.fallback.OrderClientFallback;
 import com.buaa.werwerhotel.dto.OrderDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@FeignClient(name = "user-service",contextId = "orderClient", path = "/api/users")
+@FeignClient(name = "user-service", contextId = "orderClient", path = "/api/users", fallback = OrderClientFallback.class)
 public interface OrderClient {
 
     @GetMapping("/orders/{uid}/status")

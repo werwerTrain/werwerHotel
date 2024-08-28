@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Room {
     @JsonIgnore
-    private Integer hotel_id;
+    private String hotel_id;
     private String name;
     private String photo;
     private String price;
@@ -52,11 +52,11 @@ public class Room {
         this.date = date;
     }
 
-    public Integer getHotel_id() {
+    public String getHotel_id() {
         return hotel_id;
     }
 
-    public void setHotel_id(Integer hotel_id) {
+    public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
     }
 

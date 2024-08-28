@@ -57,6 +57,7 @@ pipeline {
                 bat '''
                 kubectl apply -f k8s/wwHotel-deployment.yaml
                 kubectl apply -f k8s/wwHotel-service.yaml
+                kubectl apply -f k8s/wwHotel-hpa.yaml
                 '''
                 echo '部署成功'
             }

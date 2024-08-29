@@ -55,9 +55,9 @@ pipeline {
         stage('deploy to k8s'){
             steps{
                 bat '''
-                kubectl apply -f k8s/wwHotel-deployment.yaml
-                kubectl apply -f k8s/wwHotel-service.yaml
-                kubectl apply -f k8s/wwHotel-hpa.yaml
+                kubectl apply -f k8s/wwHotel-deployment.yaml --validate=false
+                kubectl apply -f k8s/wwHotel-service.yaml --validate=false
+                kubectl apply -f k8s/wwHotel-hpa.yaml --validate=false
                 '''
                 echo '部署成功'
             }

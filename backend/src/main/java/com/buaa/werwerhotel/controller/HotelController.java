@@ -12,6 +12,7 @@ import com.buaa.werwerhotel.service.IHotelService;
 //import com.buaa.werwertrip.service.IOrderService;
 //import com.buaa.werwertrip.service.IUserService;
 import com.buaa.werwerhotel.service.IEmailService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -179,8 +180,7 @@ public class HotelController {
         }
         Integer messages = hotelService.getCommentNum(id);
         current_hotel = hotelService.getHotelInfo(id);
-        if(current_hotel!=null)
-        {
+        if (current_hotel != null) {
             List<Object> commentInfo = new ArrayList<>();
             hotelService.searchComment(id).forEach(e -> {
                 commentInfo.add(new HashMap<>() {{
@@ -223,10 +223,8 @@ public class HotelController {
             result.put("comments", commentInfo);
             result.put("rooms", roomInfo);
             result.put("others", othersInfo);
-        }
-        else
-        {
-            result.put("name",null);
+        } else {
+            result.put("name", null);
         }
         return result;
     }
@@ -290,14 +288,14 @@ public class HotelController {
 //                    put("result",false);
 //                    put("message","身份证号格式错误");
 //                }};
-            System.out.println("id: " + id);
-            System.out.println("oid: " + oid);
-            System.out.println("checkinTime: " + checkinTime);
-            System.out.println("checkoutTime: " + checkoutTime);
-            System.out.println("roomNum: " + roomNum);
-            System.out.println("roomType: " + roomType);
-            System.out.println("customerName: " + customer.get("name"));
-            System.out.println("customerId: " + customer.get("id"));
+//            System.out.println("id: " + id);
+//            System.out.println("oid: " + oid);
+//            System.out.println("checkinTime: " + checkinTime);
+//            System.out.println("checkoutTime: " + checkoutTime);
+//            System.out.println("roomNum: " + roomNum);
+//            System.out.println("roomType: " + roomType);
+//            System.out.println("customerName: " + customer.get("name"));
+//            System.out.println("customerId: " + customer.get("id"));
 
             hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, customer.get("name"), customer.get("id"));
             // hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, "lyl", identification);
@@ -318,7 +316,6 @@ public class HotelController {
             put("orderType", "4");
         }});
 
-
         emailService.sendSimpleMail(userClient.getEmail(userId), "酒店订单支付成功", content);
         return new HashMap<>() {{
             put("result", true);
@@ -332,9 +329,8 @@ public class HotelController {
                                        @PathVariable String status) {
         List<OrderDTO> orders = switch (status) {
             case "paid" -> orderClient.getOrdersByUidAndStatus(userID, "Paid", "Hotel");
-            case "cancel" ->
-                    orderClient.getOrdersByUidAndStatus(userID, "Canceled", "Hotel");
-            case "done" -> orderClient.getOrdersByUidAndStatus(userID, "Done","Hotel");
+            case "cancel" -> orderClient.getOrdersByUidAndStatus(userID, "Canceled", "Hotel");
+            case "done" -> orderClient.getOrdersByUidAndStatus(userID, "Done", "Hotel");
             default -> orderClient.getOrderByUid(userID, "Hotel");
         };
 
@@ -423,6 +419,17 @@ public class HotelController {
             }};
         }
 
+    }
+
+    @GetMapping("/getOrderDetail")
+    @CircuitBreaker(name="getHotelOrderDetail", fallbackMethod = "getHotelOrderDetailFallback")
+    public List<Map<String, Object>> getHotelOrderDetail(String oid) {
+        return hotelService.getHotelOrderDetail(oid);
+    }
+
+    public List<Map<String, Object>> getHotelOrderDetailFallback(String oid,Throwable t) {
+        System.out.println("get hotelOrder detail request failed, fallback method executed.");
+        return new ArrayList<>();
     }
 }
 

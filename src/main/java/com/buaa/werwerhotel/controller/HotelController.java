@@ -12,6 +12,7 @@ import com.buaa.werwerhotel.service.IHotelService;
 //import com.buaa.werwertrip.service.IOrderService;
 //import com.buaa.werwertrip.service.IUserService;
 import com.buaa.werwerhotel.service.IEmailService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -278,7 +279,8 @@ public class HotelController {
         Date date = new Date();
         String formattedDate = formatter.format(date);
 
-        orderClient.addOrder(new OrderDTO(oid, userId, formattedDate, total, "Paid", "Hotel"));
+        // for yace
+        // orderClient.addOrder(new OrderDTO(oid, userId, formattedDate, total, "Paid", "Hotel"));
         for (Map<String, String> customer : customers) {
 //            System.out.println(customer.get("id"));
 //            String identification = customer.get("id");
@@ -287,19 +289,20 @@ public class HotelController {
 //                    put("result",false);
 //                    put("message","身份证号格式错误");
 //                }};
-            System.out.println("id: " + id);
-            System.out.println("oid: " + oid);
-            System.out.println("checkinTime: " + checkinTime);
-            System.out.println("checkoutTime: " + checkoutTime);
-            System.out.println("roomNum: " + roomNum);
-            System.out.println("roomType: " + roomType);
-            System.out.println("customerName: " + customer.get("name"));
-            System.out.println("customerId: " + customer.get("id"));
+//            System.out.println("id: " + id);
+//            System.out.println("oid: " + oid);
+//            System.out.println("checkinTime: " + checkinTime);
+//            System.out.println("checkoutTime: " + checkoutTime);
+//            System.out.println("roomNum: " + roomNum);
+//            System.out.println("roomType: " + roomType);
+//            System.out.println("customerName: " + customer.get("name"));
+//            System.out.println("customerId: " + customer.get("id"));
 
             hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, customer.get("name"), customer.get("id"));
             // hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, "lyl", identification);
         }
-        hotelService.updateNumWhenBill(id, checkinTime, checkoutTime, roomNum);
+        // for yace
+        // hotelService.updateNumWhenBill(id, checkinTime, checkoutTime, roomNum);
 
         String content = "【WerwerTrip】您已成功预订" + hotelService.getHotelName(id).get("name") + "，入住时间" + checkinTime + "--" + checkoutTime + "，祝您旅途愉快。";
         String Mcontent = "您已成功预订" + hotelService.getHotelName(id).get("name") + "，入住时间" + checkinTime + "--" + checkoutTime + "，祝您旅途愉快。";
@@ -315,8 +318,8 @@ public class HotelController {
             put("orderType", "4");
         }});
 
-
-        emailService.sendSimpleMail(userClient.getEmail(userId), "酒店订单支付成功", content);
+        // for yace
+        // emailService.sendSimpleMail(userClient.getEmail(userId), "酒店订单支付成功", content);
         return new HashMap<>() {{
             put("result", true);
             put("message", "下单成功");
@@ -422,8 +425,14 @@ public class HotelController {
     }
 
     @GetMapping("/getOrderDetail")
+    @CircuitBreaker(name="getHotelOrderDetail", fallbackMethod = "getHotelOrderDetailFallback")
     public List<Map<String, Object>> getHotelOrderDetail(String oid) {
         return hotelService.getHotelOrderDetail(oid);
+    }
+
+    public List<Map<String, Object>> getHotelOrderDetailFallback(String oid,Throwable t) {
+        System.out.println("get hotelOrder detail request failed, fallback method executed.");
+        return new ArrayList<>();
     }
 }
 

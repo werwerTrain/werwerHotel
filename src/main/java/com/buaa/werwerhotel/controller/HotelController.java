@@ -279,8 +279,7 @@ public class HotelController {
         Date date = new Date();
         String formattedDate = formatter.format(date);
 
-        // for yace
-        // orderClient.addOrder(new OrderDTO(oid, userId, formattedDate, total, "Paid", "Hotel"));
+        orderClient.addOrder(new OrderDTO(oid, userId, formattedDate, total, "Paid", "Hotel"));
         for (Map<String, String> customer : customers) {
 //            System.out.println(customer.get("id"));
 //            String identification = customer.get("id");
@@ -301,8 +300,7 @@ public class HotelController {
             hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, customer.get("name"), customer.get("id"));
             // hotelService.addHotelorderDetail(id, oid, checkinTime, checkoutTime, roomNum, roomType, "lyl", identification);
         }
-        // for yace
-        // hotelService.updateNumWhenBill(id, checkinTime, checkoutTime, roomNum);
+        hotelService.updateNumWhenBill(id, checkinTime, checkoutTime, roomNum);
 
         String content = "【WerwerTrip】您已成功预订" + hotelService.getHotelName(id).get("name") + "，入住时间" + checkinTime + "--" + checkoutTime + "，祝您旅途愉快。";
         String Mcontent = "您已成功预订" + hotelService.getHotelName(id).get("name") + "，入住时间" + checkinTime + "--" + checkoutTime + "，祝您旅途愉快。";
@@ -318,8 +316,7 @@ public class HotelController {
             put("orderType", "4");
         }});
 
-        // for yace
-        // emailService.sendSimpleMail(userClient.getEmail(userId), "酒店订单支付成功", content);
+        emailService.sendSimpleMail(userClient.getEmail(userId), "酒店订单支付成功", content);
         return new HashMap<>() {{
             put("result", true);
             put("message", "下单成功");

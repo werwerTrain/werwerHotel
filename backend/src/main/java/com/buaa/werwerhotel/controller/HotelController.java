@@ -48,6 +48,7 @@ public class HotelController {
                                           @RequestParam(value = "sort_type", required = false) String sort_type) {
         arrive_station = URLDecoder.decode(arrive_station, StandardCharsets.UTF_8);
         List<Map<String, Object>> result = new ArrayList<>();
+        System.out.println("hotelQuery succeed");
 
         List<String> hotelList = hotelService.searchHotelByCity(arrive_station);
         for (String id : hotelList) {
